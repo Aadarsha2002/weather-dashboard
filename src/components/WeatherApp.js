@@ -6,7 +6,7 @@ import WeatherChart from "./WeatherChart";
 function WeatherApp() {
   const [location, setLocation] = useState("");
   const dispatch = useDispatch();
-  const weatherData = useSelector((state) => state.weatherData);
+  let weatherData = useSelector((state) => state.weatherData);
 
   const handleSubmit = (e) => {
     e.preventDefault();

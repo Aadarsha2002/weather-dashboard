@@ -2,6 +2,10 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 
 function WeatherChart({ weatherData }) {
+  let locationData = [];
+  locationData.push(weatherData[1]);
+  weatherData = weatherData[0];
+
   const data = [
     {
       id: "Temperature",
@@ -17,6 +21,9 @@ function WeatherChart({ weatherData }) {
 
   return (
     <div style={{ height: 500 }}>
+      <p>
+        {locationData[0].name}, {locationData[0].country}
+      </p>
       <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
@@ -34,7 +41,7 @@ function WeatherChart({ weatherData }) {
         axisRight={null}
         axisBottom={{
           //format: MM-DD-YY HH:MM (12 hour format)
-format: "%m-%d-%y %I:%M %p",
+          format: "%m-%d-%y %I:%M %p",
           tickValues: "every 12 hours",
           legend: "Date",
           legendOffset: 36,
