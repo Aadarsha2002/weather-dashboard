@@ -4,7 +4,6 @@ import {
   FETCH_WEATHER_DATA,
   fetchWeatherDataSuccess,
   fetchWeatherDataError,
-  fetchWeatherDataRequest,
 } from "./actions";
 import {
   API_KEY,
@@ -14,16 +13,26 @@ import {
 
 function* fetchWeatherDataSaga(action) {
   try {
-    yield put(fetchWeatherDataRequest()); // Dispatch the fetchWeatherDataRequest action
-
     // Use geocoding API to get latitude and longitude
     const geocodingUrl = `${LOCATION_DATA_BASE_URL}?q=${action.payload}&limit=1&appid=${API_KEY}`;
     const geocodingResponse = yield axios.get(geocodingUrl);
     const { lat, lon } = geocodingResponse.data[0];
+    console.log("sagas lat lon", lat, lon);
 
     const forecastWeatherUrl = `${FORECAST_WEATHER_DATA_BASE_URL}?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
-    const forecastWeatherResponse = yield axios.get(forecastWeatherUrl);
-    yield put(fetchWeatherDataSuccess(forecastWeatherResponse.data));
+    const weatherResponse = yield axios.get(forecastWeatherUrl);
+    console.warn("sagas weatherData", weatherResponse?.data);
+    let weatherData = [];
+    if (weatherResponse.data.list) {
+      weatherData = weatherResponse.data.list.map((day) => {
+        return {
+          date: day.dt,
+          temp: day.main.temp,
+        };
+      });
+    }
+
+    yield put(fetchWeatherDataSuccess(weatherData));
   } catch (error) {
     yield put(fetchWeatherDataError(error));
   }

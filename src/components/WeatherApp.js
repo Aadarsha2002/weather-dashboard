@@ -7,8 +7,6 @@ function WeatherApp() {
   const [location, setLocation] = useState("");
   const dispatch = useDispatch();
   const weatherData = useSelector((state) => state.weatherData);
-  const isLoading = useSelector((state) => state.isLoading);
-  const error = useSelector((state) => state.error);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +15,7 @@ function WeatherApp() {
 
   return (
     <div>
-      <h1>5-day Weather Forecast</h1>
+      <h1>Historical Weather Data</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -27,9 +25,7 @@ function WeatherApp() {
         />
         <button type="submit">Search</button>
       </form>
-      {isLoading && <h3>Loading...</h3>}
-      {error && <h3>{error}</h3>}
-      {weatherData.list && <WeatherChart weatherData={weatherData} />}
+      {weatherData.length > 0 && <WeatherChart weatherData={weatherData} />}
     </div>
   );
 }

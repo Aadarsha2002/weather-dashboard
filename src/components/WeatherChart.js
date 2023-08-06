@@ -2,21 +2,11 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 
 function WeatherChart({ weatherData }) {
-  let chartData = [];
-  console.log("WeatherChart ", weatherData);
-  if (weatherData.list) {
-    chartData = weatherData.list.map((day) => {
-      return {
-        date: day.dt,
-        temp: day.main.temp,
-      };
-    });
-  }
   const data = [
     {
       id: "Temperature",
       color: "hsl(255, 70%, 50%)",
-      data: chartData.map((data) => {
+      data: weatherData.map((data) => {
         return {
           x: new Date(data.date * 1000),
           y: data.temp,
@@ -43,7 +33,8 @@ function WeatherChart({ weatherData }) {
         axisTop={null}
         axisRight={null}
         axisBottom={{
-          format: "%m-%d-%y %I:%M %p",
+          //format: MM-DD-YY HH:MM (12 hour format)
+format: "%m-%d-%y %I:%M %p",
           tickValues: "every 12 hours",
           legend: "Date",
           legendOffset: 36,
