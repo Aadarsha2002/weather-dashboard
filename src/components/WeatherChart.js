@@ -20,7 +20,7 @@ function WeatherChart({ weatherData }) {
   ];
 
   return (
-    <div style={{ height: 500 }}>
+    <div className="chart-container" style={{ height: 500 }}>
       <p>
         {locationData[0].name}, {locationData[0].country}
       </p>
@@ -40,8 +40,9 @@ function WeatherChart({ weatherData }) {
         axisTop={null}
         axisRight={null}
         axisBottom={{
+          whiteSpace: "pre-wrap",
           //format: MM-DD-YY HH:MM (12 hour format)
-          format: "%m-%d-%y %I:%M %p",
+          format: "%m-%d-%y\n%I:%M %p",
           tickValues: "every 12 hours",
           legend: "Date",
           legendOffset: 36,
@@ -61,6 +62,7 @@ function WeatherChart({ weatherData }) {
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
+        enableSlices="x"
         useMesh={true}
       />
     </div>
