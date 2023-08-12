@@ -1,5 +1,6 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
+import "../App.css";
 
 function WeatherChart({ weatherData }) {
   let locationData = [];
@@ -22,7 +23,8 @@ function WeatherChart({ weatherData }) {
   return (
     <div className="chart-container" style={{ height: 500 }}>
       <p>
-        {locationData[0].name}, {locationData[0].country}
+        {locationData[0].name}, {locationData[0].state},{" "}
+        {locationData[0].country}
       </p>
       <ResponsiveLine
         data={data}
@@ -39,6 +41,12 @@ function WeatherChart({ weatherData }) {
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
+        theme={{
+          text: {
+            fontSize: 12,
+            fontFamily: "Roboto",
+          },
+        }}
         axisBottom={{
           whiteSpace: "pre-wrap",
           //format: MM-DD-YY HH:MM (12 hour format)
@@ -64,6 +72,22 @@ function WeatherChart({ weatherData }) {
         pointLabelYOffset={-12}
         enableSlices="x"
         useMesh={true}
+        legends={[
+          {
+            anchor: "bottom-right",
+            direction: "column",
+            justify: false,
+            translateX: 40,
+            translateY: 0,
+            itemsSpacing: 2,
+            itemDirection: "left-to-right",
+            itemWidth: 80,
+            itemHeight: 12,
+            itemOpacity: 0.75,
+            symbolSize: 12,
+            symbolShape: "circle",
+          },
+        ]}
       />
     </div>
   );

@@ -17,6 +17,7 @@ function* fetchWeatherDataSaga(action) {
     const geocodingUrl = `${LOCATION_DATA_BASE_URL}?q=${action.payload}&limit=1&appid=${API_KEY}`;
     const geocodingResponse = yield axios.get(geocodingUrl);
     const { lat, lon } = geocodingResponse.data[0];
+    const state = geocodingResponse.data[0].state;
 
     const forecastWeatherUrl = `${FORECAST_WEATHER_DATA_BASE_URL}?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
     const weatherResponse = yield axios.get(forecastWeatherUrl);
@@ -35,10 +36,9 @@ function* fetchWeatherDataSaga(action) {
       locationData = {
         name: weatherResponse.data.city.name,
         country: weatherResponse.data.city.country,
+        state: state,
       };
     }
-
-    console.log("fetchWeatherDataSaga - ", [weatherData, locationData]);
 
     yield put(fetchWeatherDataSuccess([weatherData, locationData]));
   } catch (error) {

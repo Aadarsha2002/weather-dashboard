@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWeatherData } from "../redux/actions";
 import WeatherChart from "./WeatherChart";
-
+import "../App.css";
 
 function WeatherApp() {
   const [location, setLocation] = useState("");
