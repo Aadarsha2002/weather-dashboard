@@ -1,22 +1,17 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
+import "../App.css";
 
 function WeatherChart({ weatherData }) {
-  let chartData = [];
-  console.log("WeatherChart ", weatherData);
-  if (weatherData.list) {
-    chartData = weatherData.list.map((day) => {
-      return {
-        date: day.dt,
-        temp: day.main.temp,
-      };
-    });
-  }
+  let locationData = [];
+  locationData.push(weatherData[1]);
+  weatherData = weatherData[0];
+
   const data = [
     {
       id: "Temperature",
       color: "hsl(255, 70%, 50%)",
-      data: chartData.map((data) => {
+      data: weatherData.map((data) => {
         return {
           x: new Date(data.date * 1000),
           y: data.temp,
@@ -26,7 +21,11 @@ function WeatherChart({ weatherData }) {
   ];
 
   return (
-    <div style={{ height: 500 }}>
+    <div className="chart-container" style={{ height: 500 }}>
+      <p>
+        {locationData[0].name}, {locationData[0].state},{" "}
+        {locationData[0].country}
+      </p>
       <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
@@ -42,8 +41,16 @@ function WeatherChart({ weatherData }) {
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
+        theme={{
+          text: {
+            fontSize: 12,
+            fontFamily: "Roboto",
+          },
+        }}
         axisBottom={{
-          format: "%m-%d-%y %I:%M %p",
+          whiteSpace: "pre-wrap",
+          //format: MM-DD-YY HH:MM (12 hour format)
+          format: "%m-%d-%y\n%I:%M %p",
           tickValues: "every 12 hours",
           legend: "Date",
           legendOffset: 36,
@@ -63,7 +70,24 @@ function WeatherChart({ weatherData }) {
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
+        enableSlices="x"
         useMesh={true}
+        legends={[
+          {
+            anchor: "bottom-right",
+            direction: "column",
+            justify: false,
+            translateX: 40,
+            translateY: 0,
+            itemsSpacing: 2,
+            itemDirection: "left-to-right",
+            itemWidth: 80,
+            itemHeight: 12,
+            itemOpacity: 0.75,
+            symbolSize: 12,
+            symbolShape: "circle",
+          },
+        ]}
       />
     </div>
   );
