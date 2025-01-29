@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/line": "^0.83.0",
-    "@nivo/tooltip": "^0.83.0",
+    "@nivo/line": "^0.83.1",
+    "@nivo/tooltip": "^0.83.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@syncfusion/ej2-base": "^22.2.5",
     "@syncfusion/ej2-react-popups": "^22.2.7",
